@@ -1,0 +1,6 @@
+export const loginURL = "http://localhost:3000/sign-in"
+export const registerURL = "http://localhost:3000/sign-up"
+export const sendPostURL = "http://localhost:3000/new-post"
+export const getPostsURL = "http://localhost:3000/posts"
+export const addBookmarkURL = "http://localhost:3000/add-bookmark"
+export const removeBookmarkURL = "http://localhost:3000/remove-bookmark"
