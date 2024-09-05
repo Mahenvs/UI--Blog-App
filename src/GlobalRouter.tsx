@@ -12,6 +12,10 @@ export const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
+        path:"",
+        element:<Navigate to ="posts"/>
+      },
+      {
         path: "login",
         element: <Login />,
       },

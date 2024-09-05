@@ -3,8 +3,6 @@ import { postModel } from "@/Helper/userModel";
 import axios from "axios";
 export const createPost = async (postData: postModel) => {
     try {
-        console.log(postData);
-
         const { title, description } = postData
         const userId = localStorage.getItem("userId")
         if(!userId) {
@@ -16,13 +14,10 @@ export const createPost = async (postData: postModel) => {
             }, {
             headers: {
                 "Content-Type": "application/json",
-            },
-
+            }
         });
-
         return response
     } catch (error) {
-        console.error("Error:", error);
         return error
     }
 };

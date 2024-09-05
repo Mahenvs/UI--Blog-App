@@ -37,7 +37,7 @@ const Login = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "test@gmail.com",
-      password: "test@123",
+      password: "12345",
     },
   });
 

@@ -1,15 +1,16 @@
 import { displayToast } from "@/components/Utility/displayToast";
-import { addBookmarkURL, removeBookmarkURL } from "@/Helper/URL";
+import { addLikeURL, removeLikeURL } from "@/Helper/URL";
+
 
 import axios from "axios";
 
-export const bookmarkPost = async (postId: number, flag: string, isbookmarked: boolean, updatePostBookmark: (postId: number, isbookmarked: boolean) => void) => {
+export const likePost = async (postId: number, flag: string, isLiked: boolean, updatePostLike: (postId: number, isLiked: boolean) => void) => {
     try {
-        updatePostBookmark(postId, isbookmarked)
+        updatePostLike(postId, isLiked)
         const userId = localStorage.getItem("userId");
-        let URL = addBookmarkURL;
+        let URL = addLikeURL;
         if (flag != "bookmark") {
-            URL = removeBookmarkURL
+            URL = removeLikeURL
         }
         const response = await axios.post(URL,
             {
@@ -22,7 +23,7 @@ export const bookmarkPost = async (postId: number, flag: string, isbookmarked: b
         });
         return response
     } catch (error) {
-        updatePostBookmark(postId, !isbookmarked)
+        updatePostLike(postId, !isLiked)
         displayToast("Network failure, please try again.");
         return error
     }

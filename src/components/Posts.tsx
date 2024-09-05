@@ -8,18 +8,26 @@ import { ChatIcon } from "./Utility/Icons";
 import {
   BookmarkFilledIcon,
   BookmarkIcon,
+  HeartFilledIcon,
   HeartIcon,
 } from "@radix-ui/react-icons";
 
 import { dateParser } from "@/Helper/dateParser";
 import { bookmarkPost } from "@/API/bookmarkPost";
 import { useStore } from "@/store";
-import { toast } from "@/hooks/use-toast";
+import { likePost } from "@/API/likePost";
+import { useEffect } from "react";
+import { checkAuth } from "@/API/checkAuth";
 
 const Posts = () => {
   const {  loading, error } = usePosts();
+  useEffect(()=>{
+    checkAuth()
+  },[])
+
   const posts = useStore((state) => state.posts); // Access posts from the store
   const updatePostBookmark = useStore((state) => state.updatePostBookmark);
+  const updatePostLike = useStore((state) => state.updatePostLike);
   if (loading) {
     return <PostSkeleton></PostSkeleton>;
   }
@@ -59,25 +67,35 @@ const Posts = () => {
                     <span
                       onClick={() => {
                         bookmarkPost(post?.id, "bookmark", !post?.isbookmarked,updatePostBookmark);
-                        toast({
-                          description: "msg",
-                        });
-                        // updatePostBookmark(post?.id, !post?.isbookmarked); // Opt,imistically update state
                       }}
                     >
                       <BookmarkIcon className="size-6" />
                     </span>
                   ) : (
                     <span onClick={() => {
-                      bookmarkPost(post?.id, "NA", !post?.isbookmarked,updatePostBookmark)
-                      // updatePostBookmark(post?.id, !post?.isbookmarked); 
+                      bookmarkPost(post?.id, "NA", !post?.isbookmarked,updatePostBookmark) 
                       }}>
                       <BookmarkFilledIcon className="size-6" />
                     </span>
                   )}
                 </span>
                 <span className="cursor-pointer">
-                  <HeartIcon className="size-6" />
+                {!post?.isliked ? (
+                    <span
+                      onClick={() => {
+                        likePost(post?.id, "bookmark", !post?.isliked,updatePostLike);
+                      }}
+                    >
+                      <HeartIcon className="size-6" />
+                    </span>
+                  ) : (
+                    <span onClick={() => {
+                      likePost(post?.id, "NA", !post?.isliked,updatePostLike) 
+                      }}>
+                      <HeartFilledIcon className="size-6" />
+                    </span>
+                  )}
+
                   {/* {post?.likes} */}
                 </span>
               </div>

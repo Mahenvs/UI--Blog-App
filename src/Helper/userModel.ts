@@ -13,6 +13,6 @@ export type postModel = {
     userId: string;
     username:string;
     isbookmarked?:boolean;
-    isLiked?:boolean;
+    isliked?:boolean;
 
 }

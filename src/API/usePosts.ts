@@ -11,11 +11,17 @@ export const usePosts = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(getPostsURL);
+            const response = await axios.get(getPostsURL, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true // Include cookies with cross-origin requests
+            });
+    
             setPosts(response.data.data);
-            
+
             console.log(response.data.data);
-            
+
         } catch (error) {
             setError(error);
         } finally {
@@ -27,5 +33,5 @@ export const usePosts = () => {
         fetchData();
     }, []);
 
-    return {  loading, error };
+    return { loading, error };
 };
