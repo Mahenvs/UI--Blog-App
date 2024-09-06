@@ -23,6 +23,10 @@ const formSchema = z.object({
   username: z.string().min(3, {
     message: "username max length should be of 3 character.",
   }),
+  fullname: z.string().min(5, {
+    message: "full max length should be min of 5 character.",
+  }),
+  
   email: z.string().includes("@", {
     message: "email must include @.",
   }),
@@ -41,6 +45,7 @@ const Register = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "MHN",
+      fullname:"",
       email: "test@gmail.com",
       password: "test@123",
     },
@@ -66,14 +71,14 @@ const Register = () => {
   }
   return (
     <div className="h-full ">
-      <Card className=" w-[500px] p-4  flex flex-col items mt-10 bg-[rgb(255,255,255)] shadow-custom-light ">
+      <Card className=" w-[500px] px-4  flex flex-col items  bg-[rgb(255,255,255)] shadow-custom-light ">
         <CardHeader>
           <Header className="text-center">Join the Blogger</Header>
           {/* <CardDescription>Deploy your new project in one-click.</CardDescription> */}
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
                 name="username"
@@ -82,6 +87,19 @@ const Register = () => {
                     <FormLabel className="text-md">Username</FormLabel>
                     <FormControl>
                       <Input placeholder="username" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="fullname"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col items-start">
+                    <FormLabel className="text-md">Full Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="fullname" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -121,8 +139,8 @@ const Register = () => {
                       type="button"
                       className={`${
                         togglePswd
-                          ? "absolute right-0 top-11 line-through my-auto transform -translate-y-1/2 bg-transparent border-none cursor-pointer p-1.5"
-                          : "absolute right-0 my-auto top-11 transform -translate-y-1/2 bg-transparent border-none cursor-pointer p-1.5"
+                          ? "absolute right-0 top-8 line-through my-auto transform -translate-y-1/2 bg-transparent border-none cursor-pointer p-1.5"
+                          : "absolute right-0 my-auto top-12 transform -translate-y-1/2 bg-transparent border-none cursor-pointer p-1.5"
                       }`}
                       onClick={() => setTogglePswd(!togglePswd)}
                     >

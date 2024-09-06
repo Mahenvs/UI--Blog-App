@@ -1,12 +1,12 @@
 import Navbar from "@/components/Navbar";
 import { Outlet } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
-import { useEffect } from "react";
-import axios from "axios";
-import { checkAuth } from "@/API/checkAuth";
+import { useAuth } from "@/hooks/useAuth";
+
 
 const Layout = () => {
-  
+  const isAuthenticated = useAuth(); // Use the custom hook
+
   return (
     <div>
       <Navbar />

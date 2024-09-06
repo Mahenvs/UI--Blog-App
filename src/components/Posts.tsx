@@ -2,7 +2,7 @@ import { usePosts } from "@/API/usePosts";
 import { PostSkeleton } from "./PostSkeleton";
 import Header from "./Header";
 import { postModel } from "@/Helper/userModel";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import { Separator } from "@/components/ui/separator";
 import { ChatIcon } from "./Utility/Icons";
 import {
@@ -16,14 +16,11 @@ import { dateParser } from "@/Helper/dateParser";
 import { bookmarkPost } from "@/API/bookmarkPost";
 import { useStore } from "@/store";
 import { likePost } from "@/API/likePost";
-import { useEffect } from "react";
-import { checkAuth } from "@/API/checkAuth";
+import DisplayAvatar from "./DisplayAvatar";
 
 const Posts = () => {
   const {  loading, error } = usePosts();
-  useEffect(()=>{
-    checkAuth()
-  },[])
+  
 
   const posts = useStore((state) => state.posts); // Access posts from the store
   const updatePostBookmark = useStore((state) => state.updatePostBookmark);
@@ -38,12 +35,10 @@ const Posts = () => {
     <div className="w-1/2">
       {posts?.map((post: postModel) => {
         return (
-          <div className="flex flex-start flex-col">
+          <div className="flex flex-start flex-col" key={post.title}>
             <div className="flex items-center gap-4">
-              <Avatar>
-                <AvatarImage src="https://github.com/mahenvs" alt="@shadcn" />
-                <AvatarFallback>{post.username}</AvatarFallback>
-              </Avatar>
+              <DisplayAvatar username={post.username}/>
+            
               <span>{post?.username}</span>
             </div>
             <section>
@@ -75,7 +70,7 @@ const Posts = () => {
                     <span onClick={() => {
                       bookmarkPost(post?.id, "NA", !post?.isbookmarked,updatePostBookmark) 
                       }}>
-                      <BookmarkFilledIcon className="size-6" />
+                      <BookmarkFilledIcon className="size-6 text-sky-700" />
                     </span>
                   )}
                 </span>
@@ -92,7 +87,7 @@ const Posts = () => {
                     <span onClick={() => {
                       likePost(post?.id, "NA", !post?.isliked,updatePostLike) 
                       }}>
-                      <HeartFilledIcon className="size-6" />
+                      <HeartFilledIcon className="size-6 text-red-500" />
                     </span>
                   )}
 

@@ -60,6 +60,7 @@ const Write = () => {
     //   navigate("/posts");
     }
   };
+  
   return (
     <Card className="w-1/2">
       <CardHeader>

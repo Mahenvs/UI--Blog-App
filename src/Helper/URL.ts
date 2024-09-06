@@ -1,4 +1,5 @@
 export const loginURL = "http://localhost:3000/sign-in"
+export const logoutURL = "http://localhost:3000/sign-out"
 export const registerURL = "http://localhost:3000/sign-up"
 export const sendPostURL = "http://localhost:3000/new-post"
 export const getPostsURL = "http://localhost:3000/posts"

@@ -3,7 +3,7 @@ import { userModel } from "@/Helper/userModel";
 import axios from "axios";
 export const ApiLogin = async (formData: userModel, flag: string) => {
     try {
-        console.log(formData);
+
         let URL = loginURL
         if (flag == "signin") {
             URL = loginURL
@@ -11,12 +11,10 @@ export const ApiLogin = async (formData: userModel, flag: string) => {
         else {
             URL = registerURL
         }
-        const {email,password} = formData
 
         const response = await axios.post(URL,
             {
-                email,
-                password
+             ...formData
             }, {
             headers: {
                 "Content-Type": "application/json",

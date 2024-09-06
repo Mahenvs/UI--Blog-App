@@ -17,6 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Header from "./Header";
 import { ApiLogin } from "@/API/ApiLogin";
+import { useStore } from "@/store";
 
 const formSchema = z.object({
   email: z.string().includes("@", {
@@ -30,7 +31,7 @@ const formSchema = z.object({
 
 const Login = () => {
   // const { login, logout } = useContext(AuthContext);
-
+  const {login,logout,isAuthenticated} = useStore()
   const navigate = useNavigate();
   const [togglePswd, setTogglePswd] = useState<boolean>(false);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -52,11 +53,13 @@ const Login = () => {
         type: "manual",
         message: "Login failed/Invalid Creds",
       });
+      logout()
       navigate("/login");
+      
       throw new Error(`HTTP error! Status: ${response?.statusText}`);
     } else {
       localStorage.setItem('userId',response.data.userId)
-      // Cookies.set("token", responseData.token);
+      login()
       navigate("/posts");
     }
   };
@@ -64,7 +67,7 @@ const Login = () => {
     <div className="h-full ">
       <Card className=" w-[500px] p-4  flex flex-col items mt-10 bg-[rgb(255,255,255)] shadow-custom-light ">
         <CardHeader>
-          <Header variant="h1" className="text-center">Log in</Header>
+          <Header  variant="h1" className="text-center">Log in</Header>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -104,7 +107,7 @@ const Login = () => {
                       className={`${
                         togglePswd
                           ? "absolute right-0 top-11 line-through my-auto transform -translate-y-1/2 bg-transparent border-none cursor-pointer p-1.5"
-                          : "absolute right-0 my-auto top-11 transform -translate-y-1/2 bg-transparent border-none cursor-pointer p-1.5"
+                          : "absolute right-0 my-auto top-12 transform -translate-y-1/2 bg-transparent border-none cursor-pointer p-1.5"
                       }`}
                       onClick={() => setTogglePswd(!togglePswd)}
                     >

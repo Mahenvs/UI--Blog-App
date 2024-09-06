@@ -4,7 +4,7 @@ interface HeaderProps {
   children: React.ReactNode;
   className?: string;
   variant?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
