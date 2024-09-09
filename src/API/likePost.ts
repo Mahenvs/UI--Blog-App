@@ -24,7 +24,7 @@ export const likePost = async (postId: number, flag: string, isLiked: boolean, u
         return response
     } catch (error) {
         updatePostLike(postId, !isLiked)
-        displayToast("Network failure, please try again.");
+        displayToast("You need to Login to like a post.","rgb(227, 47, 47)");
         return error
     }
 }

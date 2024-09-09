@@ -47,6 +47,7 @@ const Login = () => {
     form.clearErrors("root"); 
 
     const response = await ApiLogin(values, "signin");
+    console.log(!response.status);
     
     if (!response?.status) {
       form.setError("root", {

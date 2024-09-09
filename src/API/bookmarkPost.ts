@@ -23,7 +23,7 @@ export const bookmarkPost = async (postId: number, flag: string, isbookmarked: b
         return response
     } catch (error) {
         updatePostBookmark(postId, !isbookmarked)
-        displayToast("Network failure, please try again.");
+        displayToast("You need to Login to bookmark a post.","rgb(227, 47, 47)");
         return error
     }
 }

@@ -29,7 +29,7 @@ const Posts = () => {
     return <PostSkeleton></PostSkeleton>;
   }
   if (error) {
-    return <>Sorry.. Response not found</>;
+    return <Header>Check your Network and try again..</Header>;
   }
   return (
     <div className="w-1/2">

@@ -1,6 +1,11 @@
 import { loginURL, registerURL } from "@/Helper/URL";
 import { userModel } from "@/Helper/userModel";
 import axios from "axios";
+export interface ApiResponse {
+    status: number;
+    message: string;
+    data?: Array<string>; // Adjust based on your response structure
+  }
 export const ApiLogin = async (formData: userModel, flag: string) => {
     try {
 
@@ -21,9 +26,10 @@ export const ApiLogin = async (formData: userModel, flag: string) => {
             },
             withCredentials: true
         });
-
+        
         return response
     } catch (error) {
         console.error("Error:", error);
+        return error
     }
 };

@@ -18,7 +18,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   }
   
   if (!isAuthenticated) {
-    displayToast("Please login");
+    displayToast("Please login","rgb(36, 116, 130)");
     return <Navigate to="/login" />;
   } else
     return children

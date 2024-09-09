@@ -10,7 +10,7 @@ export const CheckAuth = async () => {
         if (response.data.authenticated) {
             // User is authenticated
             console.log("User is authenticated");
-
+            localStorage.setItem("userId",response.data)
         } else {
 
             // User is not authenticated

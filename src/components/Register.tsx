@@ -57,9 +57,15 @@ const Register = () => {
 
     console.log(values);
     const response = await ApiLogin(values, "signup");
-    console.log(response);
-
-    if (!response?.status) {
+    console.log(response.status);
+    if (response?.status == 409) {
+      form.setError("root", {
+        type: "manual",
+        message: "User already exists",
+      });
+      navigate("/register");
+    }
+    else if (!response?.status) {
       form.setError("root", {
         type: "manual",
         message: "SignUp failed",
@@ -189,10 +195,10 @@ const Register = () => {
                 <p className="text-gray-700 text-md">Not a member yet?</p>
                 <div className="flex space-x-1">
                   <Link
-                    to="/register"
+                    to="/login"
                     className="text-blue-500   hover:text-blue-700 font-semibold"
                   >
-                    Create account
+                    Existing User
                   </Link>
                   <span className="text-gray-500">|</span>
                   <Link

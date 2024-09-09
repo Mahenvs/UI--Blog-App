@@ -3,8 +3,9 @@ import Header from "./Header";
 import { NavLink, useNavigate } from "react-router-dom";
 import { PencilIcon } from "./Utility/Icons";
 import { useStore } from "@/store";
-import DisplayAvatar from "./DisplayAvatar";
+
 import { ApiLogout } from "@/API/ApiLogout";
+import Logout from "./Logout";
 
 const Navbar = () => {
   const { isAuthenticated } = useStore();
@@ -46,8 +47,10 @@ const Navbar = () => {
 
   const {logout} = useStore()
 
-  const logoutHandler = () =>{
+  const logOutHandler = async(flag:string) =>{
     ApiLogout()  
+    console.log(flag);
+    
     // Updating store
     logout()
   }
@@ -68,9 +71,9 @@ const Navbar = () => {
             </NavLink>
           ))}
           {isAuthenticated && (
-            <span onClick={logoutHandler}>
-              <DisplayAvatar username={"sd"} />{" "}
-            </span>
+            <div className="font-medium text-lg  flex mx-2 text-black relative ">
+            <Logout logOutHandler={logOutHandler} />
+            </div>
           )}
         </div>
       </section>
