@@ -12,7 +12,7 @@ export const useAuth = () => {
         const response = await axios.get(checkAuthUrl, { withCredentials: true });
         if (response.status) {
           console.log(response.data.user);
-          localStorage.setItem("userId",response.data?.user?.slice(0,2))
+          // localStorage.setItem("userId",response.data?.user?.email?.slice(0,2))
           login();
         } else {
           logout();

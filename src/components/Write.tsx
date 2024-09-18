@@ -13,15 +13,13 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createPost } from "@/API/createPost";
 import { useNavigate } from "react-router-dom";
-
+import { useEffect, useState } from "react";
+import { useQuill } from "react-quilljs";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 const formSchema = z.object({
   title: z.string().min(4, {
     message: "title is manadatory.",
@@ -31,7 +29,10 @@ const formSchema = z.object({
   }),
 });
 const Write = () => {
-  const navigate = useNavigate()
+  const { quill, quillRef } = useQuill();
+  
+
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,28 +40,35 @@ const Write = () => {
       description: "",
     },
   });
+  const onEditorStateChange = (editorState) => {
+    form.setValue("description", editorState);
+  };  const editorContent = form.watch("description");
+
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    form.clearErrors(); 
-    form.clearErrors("root"); 
+    form.clearErrors();
+    form.clearErrors("root");
 
     const response = await createPost(values);
-    
+
     if (!response?.status) {
       form.setError("root", {
         type: "manual",
         message: response?.statusText,
       });
-    //   navigate("/login");
+      //   navigate("/login");
       throw new Error(`HTTP error! Status: ${response?.statusText}`);
     } else {
-
-        navigate("/posts")
+      navigate("/posts");
       // Cookies.set("token", responseData.token);
-    //   navigate("/posts");
+      //   navigate("/posts");
     }
   };
-  
+  const [isBold, setBold] = useState(false);
+  const applyStyle = (e) => {
+    console.log(isBold);
+    console.log(e.target.value);
+  };
   return (
     <Card className="w-1/2">
       <CardHeader>
@@ -82,7 +90,16 @@ const Write = () => {
                 </FormItem>
               )}
             />
-            <FormField
+            {/* <section className="cursor-pointer"> */}
+              {/* <div style={{ width: 500, height: 300 }}> */}
+              <ReactQuill
+        theme="snow"
+        value={editorContent}
+        onChange={onEditorStateChange}
+      />
+              {/* </div> */}
+            {/* </section> */}
+            {/* <FormField
               control={form.control}
               name="description"
               render={({ field }) => (
@@ -101,7 +118,7 @@ const Write = () => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
             <Button
               type="submit"
